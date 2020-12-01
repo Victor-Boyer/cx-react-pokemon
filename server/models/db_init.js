@@ -1,20 +1,6 @@
 const knex = require('knex')
 const fs = require('fs');
 const { error } = require('console');
-
-function getKeys(key, pokemon) {
-  var obj = pokemon[key],
-      keys = [];
-  if(Object.keys) {
-      keys = Object.keys(obj);
-  } else {
-      for(var k in obj) {
-          keys.push(k);
-      }
-  }
-  return keys;
-}
-
 const db = knex({
     client: 'mysql',
     connection: {
@@ -25,58 +11,67 @@ const db = knex({
   }
 })
 
-db.schema.hasTable('pokemon_entity').then(function(exists) {
-  if (!exists) {
-  let pokemon
-  try {
-      pokemon = JSON.parse(fs.readFileSync('./data_seed/pokedextest.json', 'utf8', (err, file) => {
-                      if (err) throw 'Error: can\'t read seed file' + err
-                    }))
-    } catch (err) {
-      console.error(err)
-    }
-    //console.log(pokemon);
-    console.log(getKeys('0', pokemon));
-    
-    console.log('BD not exist')
 
-    /* return knex.schema.createTable('pokemon_entity', function(t) {
+function up (knex1 ,knex, Promise) {
+  return Promise.all([
+      knex.schema.hasTable('pokemon_entity').then(function(exists) {
+        if(!exists) {
+          return knex.schema.createTable('pokemon_entity', function(t) {
+            
+            t.string('id').primary() // integer id
 
-    t.increments('id').primary();
-    t.string('numéro');
-    t.string('nom');
-    t.string('nomen');
-    t.string('nomja');
-    t.string('nomtm');
-    t.string('nomde');
-    t.string('legende');
-    t.string('ndex');
-    t.string('jdex');
-    t.string('njdex');
-    t.string('hdex');
-    t.string('fdex');
-    t.string('odex');
-    t.string('opdex');
-    t.string('espece');
-    t.string('taille');
-    t.string('poids');
-    t.string('fmratio');
-    t.string('oeufpas');
-    t.string('effortval');
-    t.string('type1');
-    t.string('type2');
-    t.string('expval');
-    t.string('expmax');
-    t.string('captureval');
-    t.string('groupoeuf1');
-    t.string('groupoeuf2');
-    t.string('capspe1');
-    t.string('capspe2');
-    t.string('capspe2-reve');
-    t.string('couleur');
-    t.string('forme');
-    t.string('pokemon');
-    t.string('numero'); 
-    }); */
-  }
-})
+              // column
+            t.string('couleur');
+            t.string('espece');
+            t.string('type');
+            t.string('type1');
+            t.string('type2');
+            t.string('taille');
+            t.string('poids');
+            t.string('forme');
+            t.string('pokemon');
+            t.string('nomfr');
+            t.string('nomen');
+            t.string('nomtm');
+            t.string('nomja');
+          }).then(function () {
+              //get JSON
+              let pokemon
+              try {
+                pokemon = JSON.parse(fs.readFileSync('./data_seed/pokedextest.json', 'utf8', (err, file) => {
+                if (err) throw 'Error: can\'t read seed file : ' + err
+                }))
+              } catch (err) {
+                  console.error(err)
+                }
+              for(let i = 0; i < pokemon.length; i++) {
+                console.log('test' + i);
+                let pok = [
+                  { 
+                    id: pokemon[i].numéro,
+                    couleur: pokemon[i].couleur,
+                    type: pokemon[i].type,
+                    type1: pokemon[i].type1,
+                    type2: pokemon[i].type2,
+                    nomfr: pokemon[i].nom
+                  }
+                ]
+
+                knex1('pokemon_entity').insert(pok).then(() => console.log("data inserted")
+                .catch((err) => {console.log(err); throw err})
+                )
+
+
+
+            }
+              
+            })
+        }
+        else {
+          console.log('Database already exist.');
+        }
+      }),
+  ]);
+};
+
+up(knex, db, Promise);
