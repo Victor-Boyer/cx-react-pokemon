@@ -7,20 +7,21 @@ const db = knex({
     host : '127.0.0.1',
     user : 'root',
     password : 'root',
-    database : 'pokemon'
+    database : 'pokemon',
+    useNullAsDefault: true
   }
 })
 
 
-function up (knex1 ,knex, Promise) {
+function up (db, Promise) {
   return Promise.all([
-      knex.schema.hasTable('pokemon_entity').then(function(exists) {
+      db.schema.hasTable('pokemon_entity').then(function(exists) {
         if(!exists) {
-          return knex.schema.createTable('pokemon_entity', function(t) {
+          return db.schema.createTable('pokemon_entity', function(t) {
             
             t.string('id').primary() // integer id
 
-              // column
+            // column
             t.string('couleur');
             t.string('espece');
             t.string('type');
@@ -34,35 +35,43 @@ function up (knex1 ,knex, Promise) {
             t.string('nomen');
             t.string('nomtm');
             t.string('nomja');
+
           }).then(function () {
               //get JSON
               let pokemon
               try {
-                pokemon = JSON.parse(fs.readFileSync('./data_seed/pokedextest.json', 'utf8', (err, file) => {
+                pokemon = JSON.parse(fs.readFileSync('./data_seed/pokedex.json', 'utf8', (err, file) => {
                 if (err) throw 'Error: can\'t read seed file : ' + err
                 }))
               } catch (err) {
                   console.error(err)
                 }
+              
+              //data insertion
               for(let i = 0; i < pokemon.length; i++) {
-                console.log('test' + i);
                 let pok = [
                   { 
                     id: pokemon[i].numéro,
+                    espece: pokemon[i].numéro,
                     couleur: pokemon[i].couleur,
                     type: pokemon[i].type,
                     type1: pokemon[i].type1,
                     type2: pokemon[i].type2,
-                    nomfr: pokemon[i].nom
+                    taille: pokemon[i].taille,
+                    poids: pokemon[i].poids,
+                    forme: pokemon[i].forme,
+                    pokemon: pokemon[i].pokemon,
+                    nomfr: pokemon[i].nom,
+                    nomen: pokemon[i].nomen,
+                    nomtm: pokemon[i].nomtm,
+                    nomja: pokemon[i].nomja,
                   }
                 ]
-
-                knex1('pokemon_entity').insert(pok).then(() => console.log("data inserted")
-                .catch((err) => {console.log(err); throw err})
-                )
-
-
-
+                try {
+                  db('pokemon_entity').insert(pok).then(() => console.log("data inserted"))
+                }catch (err) {
+                  console.log('Error : ' + err);
+                }
             }
               
             })
@@ -74,4 +83,5 @@ function up (knex1 ,knex, Promise) {
   ]);
 };
 
-up(knex, db, Promise);
+
+up(db, Promise);
