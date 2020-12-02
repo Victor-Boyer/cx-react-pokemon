@@ -2,7 +2,7 @@ const knex = require('knex')
 const fs = require('fs');
 const { error } = require('console');
 const db = knex({
-    client: 'mysql',
+    client: 'pg',
     connection: {
     host : '127.0.0.1',
     user : 'root',
@@ -13,7 +13,7 @@ const db = knex({
 })
 
 
-function up (db, Promise) {
+function pokemon_entity (db, Promise) {
   return Promise.all([
       db.schema.hasTable('pokemon_entity').then(function(exists) {
         if(!exists) {
@@ -83,5 +83,65 @@ function up (db, Promise) {
   ]);
 };
 
+function pokemon_attack (db, Promise) {                
+  return Promise.all([
+      db.schema.hasTable('pokemon_attack').then(function(exists) {
+        if(!exists) {
+          return db.schema.createTable('pokemon_attack', function(t) {
+            
+            t.foreign('id_pokemon').references('pokemon_entity.id')
+            t.string('id_pokemon') // integer foreign key : id from pokemon
 
-up(db, Promise);
+            // column
+            t.string('niveau');
+            t.string('nom');
+            t.string('puissance');
+            t.string('precision');
+            t.string('pp');
+          }).then(function () {
+              //get JSON
+              let pokemon
+              try {
+                pokemon = JSON.parse(fs.readFileSync('./data_seed/pokedex.json', 'utf8', (err, file) => {
+                if (err) throw 'Error: can\'t read seed file : ' + err
+                }))
+              } catch (err) {
+                  console.error(err)
+                }
+
+              //data insertion
+
+              for(let j = 0; j < pokemon.length; j++) {
+                let att = 0;
+                att = pokemon[j].attaques.length
+                for(let i = 0; i < att; i++) {
+                  let att = [
+                    { 
+                      id_pokemon: pokemon[j].numéro,
+                      niveau: pokemon[j].attaques[i].niveau,
+                      nom: pokemon[j].attaques[i].nom,
+                      puissance: pokemon[j].attaques[i].puissance,
+                      precision: pokemon[j].attaques[i].precision,
+                      pp: pokemon[j].attaques[i].pp
+                    }
+                  ]
+                  try {
+                    db('pokemon_attack').insert(att).then(() => console.log("data inserted"))
+                  }catch (err) {
+                    console.log('Error : ' + err);
+                  }
+                }
+              }
+            })
+        }
+        else {
+          console.log('Data table already exist.');
+        }
+      }),
+  ]);
+};
+
+
+pokemon_entity(db, Promise).then(() => {
+  pokemon_attack(db, Promise);
+});
