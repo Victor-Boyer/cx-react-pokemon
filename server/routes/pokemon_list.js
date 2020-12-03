@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const homeCtrl = require('../controllers/homeController.js')
+const PokeCtrl = require('../controllers/pokemon_list_controller.js')
 
 
 /* --------------[ ROUTER ]----------------- */
 
 // Page d'accueil [GET]
-router.get('/test', homeCtrl.home)
+router.get('/pokemons', PokeCtrl.liste)
 
 
 

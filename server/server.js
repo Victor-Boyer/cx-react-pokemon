@@ -2,19 +2,12 @@ const http = require('http');
 const app = require('./app');
 
 /* Port manager*/
-const normalizePort = val => {
-  const port = parseInt(val, 10);
 
-  if (isNaN(port)) {
-    return val;
-  }
-  if (port >= 0) {
-    return port;
-  }
-  return false;
-};
-const port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
+const port = process.argv[2]
+if(!port) {
+  console.log('No port selected');
+  process.exit(0)
+}
 
 /* Error manager */
 const errorHandler = error => {
@@ -47,4 +40,4 @@ server.on('listening', () => {
   console.log('Listening on ' + bind);
 });
 
-server.listen(port);
+server.listen(port)
