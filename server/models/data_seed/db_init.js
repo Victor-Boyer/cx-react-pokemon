@@ -40,7 +40,7 @@ function pokemon_entity (db, Promise) {
               //get JSON
               let pokemon
               try {
-                pokemon = JSON.parse(fs.readFileSync('./data_seed/pokedex.json', 'utf8', (err, file) => {
+                pokemon = JSON.parse(fs.readFileSync('pokedex.json', 'utf8', (err, file) => {
                 if (err) throw 'Error: can\'t read seed file : ' + err
                 }))
               } catch (err) {
@@ -102,7 +102,7 @@ function pokemon_attack (db, Promise) {
               //get JSON
               let pokemon
               try {
-                pokemon = JSON.parse(fs.readFileSync('./data_seed/pokedex.json', 'utf8', (err, file) => {
+                pokemon = JSON.parse(fs.readFileSync('pokedex.json', 'utf8', (err, file) => {
                 if (err) throw 'Error: can\'t read seed file : ' + err
                 }))
               } catch (err) {

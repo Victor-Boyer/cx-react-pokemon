@@ -4,18 +4,24 @@ import React, {Component} from 'react';
 require('isomorphic-fetch');
 
 class App extends Component {
+  constructor () {
+    super()
+
+  }
   render() {
-    const data = fetch('http://localhost:4001/pokemons/').then((res) => {
+    fetch('http://localhost:4000/pokemons').then((res) => {
       if (res.status >= 400) {
         throw new Error("Bad response from server");
       }
       return res.json();
-    })
+    }).then(function(data) {
+      console.log(data);
+  });
     
     return (
       <div className="card"> 
         <div className="card">
-          <h5 className="card-title"> {data[1]} </h5>
+          <h5 className="card-title"></h5>
           <h6 className="card-subtitle mb-2 text-muted">steve@apple.com</h6>
         </div>
       </div>
