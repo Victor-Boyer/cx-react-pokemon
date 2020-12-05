@@ -33,6 +33,7 @@ function pokemon_entity(db, Promise) {
             t.string("nomen");
             t.string("nomtm");
             t.string("nomja");
+            t.string("url");
           })
           .then(function () {
             //get JSON
@@ -65,6 +66,7 @@ function pokemon_entity(db, Promise) {
                   nomen: pokemon[i].nomen,
                   nomtm: pokemon[i].nomtm,
                   nomja: pokemon[i].nomja,
+                  url: "https://assets.pokemon.com/assets/cms2/img/pokedex/detail/"+ pokemon[i].numéro +".png"
                 },
               ];
               try {

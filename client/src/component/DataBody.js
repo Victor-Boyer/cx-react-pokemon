@@ -18,6 +18,7 @@ class DataBody extends Component {
       if (res.status >= 400) {
         throw new Error("Bad response from server");
       }
+      console.log(res.data);
       this.setState({
         loading: false,
         pokemons: res.data
@@ -32,7 +33,7 @@ class DataBody extends Component {
 
     return (
       <ListPokemons>
-        { this.state.pokemons.map(pokemon => <ListPokemon>{pokemon.nomfr}</ListPokemon>)}
+        { this.state.pokemons.map(pokemon => <ListPokemon title={pokemon.nomfr} number={pokemon.id} pic={pokemon.url}>{pokemon.id}</ListPokemon>)}
       </ListPokemons>
     );
   }
