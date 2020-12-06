@@ -53,7 +53,7 @@ function pokemon_entity(db, Promise) {
               let pok = [
                 {
                   id: pokemon[i].numéro,
-                  espece: pokemon[i].numéro,
+                  espece: pokemon[i].espece,
                   couleur: pokemon[i].couleur,
                   type: pokemon[i].type,
                   type1: pokemon[i].type1,

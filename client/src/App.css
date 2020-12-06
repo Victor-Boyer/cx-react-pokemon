@@ -37,6 +37,28 @@
   }
 }
 
-.card {
-  width: 18rem;
+.box{
+  display: flex;
+  flex-wrap: wrap;  
+}
+
+.tab{
+  display: flex;
+  width: 50%;
+}
+
+.card{
+  margin: 1%;
+}
+
+body{
+  background-color: #616161;
+}
+
+.form-control{
+  color: white;
+}
+
+.infoTab {
+  margin-right: 2%;
 }
