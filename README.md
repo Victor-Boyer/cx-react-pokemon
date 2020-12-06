@@ -2,87 +2,57 @@
 
 The purpose of theses exercices is simple, manipulate and display pokemons
 
-## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
-### Prerequisites
-
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
+First, you have to instal the database (postreSQL) with the script ```/server/models/data_seed/db_init.js```
+If you have some authentication issues, you may can resolve it in the same script, where the db connection is initialized : 
 ```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
+const db = knex({
+  client: "your_database",
+  connection: {
+    host: "127.0.0.1 / locahost",
+    user: "database_username",
+    password: "username_password",
+    database: "database_name",
+    useNullAsDefault: true,
+  },
+});
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
+Don't forget to do
 
 ```
-Give an example
+npm install
 ```
 
-## Deployment
+In client AND server directory.
 
-Add additional notes about how to deploy this on a live system
+After run server on port 4000
+
+```
+/server$ node server.js 4000
+```
+And finally run the client 
+```
+/client$ npm start
+```
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [NODEJS]
+* [KNEX]
+* [REACTJS]
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+Please read [CONTRIBUTING.md](https://github.com/pu-erh/poke-mon) for details on our exercise.
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Victor BOYER**
+* **Samy KHELFA**
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+EFREI PARIS
 
