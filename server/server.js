@@ -3,7 +3,7 @@ const app = require('./app');
 
 /* Port manager*/
 
-const port = process.argv[2]
+const port = process.argv[2] || 4000
 if(!port) {
   console.log('No port selected');
   process.exit(0)

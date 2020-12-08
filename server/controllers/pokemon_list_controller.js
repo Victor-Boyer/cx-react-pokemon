@@ -31,7 +31,6 @@ exports.onePokemon = (req, res) => {
 exports.attackPokemon = (req, res) => {
   db("pokemon_attack")
   .where({ id_pokemon: req.params.id })
-  .first()
   .then((data) => {
     res.send(data);
   });

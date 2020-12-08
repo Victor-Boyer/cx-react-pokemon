@@ -10,16 +10,6 @@ const ListPokemon = ({title, pic, children, id}) => {
                 <a href={id} className="btn btn-primary">Détail</a>
             </div>  
         </div>
-/*         <div class="card">
-        <div class="card-image">
-          <img src={pic}/>
-          <span class="card-title">{title}</span>
-          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
-        </div>
-        <div class="card-content">
-            <p>{children}</p>
-        </div>
-      </div> */
     )
 }
 

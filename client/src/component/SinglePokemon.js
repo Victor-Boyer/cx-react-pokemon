@@ -108,7 +108,8 @@ class SinglePokemon extends Component {
 
       <table class="highlight">
         <tbody>
-          <tr>
+          <AttackPokemon id={this.state.pokemon.id}></AttackPokemon>
+{/*           <tr>
             <th>Niveau</th>
             <th>{this.state.attack.niveau}</th>
           </tr>
@@ -127,7 +128,7 @@ class SinglePokemon extends Component {
           <tr>
             <td>PP</td>
             <td><strong>{this.state.attack.pp}</strong></td>
-          </tr>
+          </tr> */}
         </tbody>
       </table>
       </div>
